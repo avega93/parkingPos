@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/xampp/htdocs/application/views/productos/venta/lista.php</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/productos/ingreso.php</file>
+            <file>file:/C:/xampp/htdocs/application/config/config.php</file>
+            <file>file:/C:/xampp/htdocs/pos/src/Mike42/Escpos/PrintConnectors/FilePrintConnector.php</file>
+            <file>file:/C:/xampp/htdocs/static/css/login.css</file>
+            <file>file:/C:/xampp/htdocs/application/views/productos/ingreso/lista.php</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/productos/venta.php</file>
+            <file>file:/C:/xampp/htdocs/static/js/daos.js</file>
+            <file>file:/C:/xampp/htdocs/static/plugins/ckeditor/lang/es.js</file>
+            <file>file:/C:/xampp/htdocs/application/config/database.php</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/administrador/ajax.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/administrador/usuario/lista.php</file>
+            <file>file:/C:/xampp/htdocs/static/plugins/bootstrap-dialog/bootstrap-dialog.min.js</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/parqueadero/parqueo.php</file>
+            <file>file:/C:/xampp/htdocs/pos/example/resources/escpos-php.png</file>
+            <file>file:/C:/xampp/htdocs/system/libraries/Email.php</file>
+            <file>file:/C:/xampp/htdocs/pos/example/demo.php</file>
+            <file>file:/C:/xampp/htdocs/pos/src/Mike42/Escpos/PrintConnectors/DummyPrintConnector.php</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/administrador/usuario.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/eMail/mailFooter.php</file>
+            <file>file:/C:/xampp/htdocs/pos/src/Mike42/Escpos/Printer.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/parqueadero/parqueo/lista.php</file>
+            <file>file:/C:/xampp/htdocs/pos/autoload.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/administrador/login/login.php</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/parqueadero/mensualidad.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/administrador/usuario/agregar.php</file>
+            <file>file:/C:/xampp/htdocs/application/models/modelo.php</file>
+            <file>file:/C:/xampp/htdocs/pos/example/resources/escpos-php-small.png</file>
+            <file>file:/C:/xampp/htdocs/application/views/cierres/historial/lista.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/eMail/mailHeader.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/administrador/templates/header.php</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/parqueadero/ajax.php</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/cierres/historial.php</file>
+            <file>file:/C:/xampp/htdocs/pos/src/Mike42/Escpos/PrintBuffers/EscposPrintBuffer.php</file>
+            <file>file:/C:/xampp/htdocs/pos/example/resources/tulips.png</file>
+            <file>file:/C:/xampp/htdocs/application/views/eMail/mailRecuperarContrasena.php</file>
+            <file>file:/C:/xampp/htdocs/pos/src/Mike42/Escpos/PrintConnectors/WindowsPrintConnector.php</file>
+            <file>file:/C:/xampp/htdocs/pos/example/graphics.php</file>
+            <file>file:/C:/xampp/htdocs/static/plugins/bootstrap-dialog/bootstrap-dialog.min.css</file>
+            <file>file:/C:/xampp/htdocs/application/views/parqueadero/mensualidad/pagar.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/parqueadero/historial/lista.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/productos/ingreso/agregar.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/parqueadero/mensualidad/lista.php</file>
+            <file>file:/C:/xampp/htdocs/pos/example/resources/tux.png</file>
+            <file>file:/C:/xampp/htdocs/application/views/administrador/login/recuperar.php</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/parqueadero/tarifas.php</file>
+            <file>file:/C:/xampp/htdocs/application/views/administrador/templates/footer.php</file>
+            <file>file:/C:/xampp/htdocs/pos/src/Mike42/Escpos/resources/capabilities.json</file>
+            <file>file:/C:/xampp/htdocs/application/controllers/parqueadero/historial.php</file>
+        </group>
+    </open-files>
+</project-private>

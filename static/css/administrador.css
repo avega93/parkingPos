@@ -1,0 +1,19 @@
+body {
+  background-color: #eee;
+}
+.contenedor{
+    background: #fcfcfc;
+    border-radius: 15px;
+    padding-bottom: 40px;
+}
+.btn-principales{
+    float: right;
+    position: relative;
+    margin-top: 20px;
+}
+.rol_checkbox{
+    float: left;
+    width: 340px;
+    margin-left: 30px;
+    padding-left: 30px;
+}

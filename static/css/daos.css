@@ -1,0 +1,163 @@
+/*
+//
+// DATA PHP
+//
+*/
+.daos_grid_default{
+    /*esta clase debe permanecer vacia para que los demas estilos carguen*/
+}
+.daos_grid_php{
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-collapse: inherit;
+    border: solid;
+    border-width: 1px;
+    padding-bottom: 44px;
+}
+.daos_grid_php table{
+
+}
+.daos_grid_php_inner{
+    overflow-x: scroll;
+    width: 100%;
+}
+.daos_grid_php table thead tr th{
+    color: #0099cc;
+    text-align: center;
+}
+.daos_grid_php table tbody tr td{
+}
+.daos_grid_php table tfoot tr th{
+    color: #0099cc;
+    text-align: center;
+}
+.daos_grid_glyphicon{
+    color: #006699;
+}
+.daos_grid_filtros_top{
+    border-top-left-radius: 6px !important;
+    border-top-right-radius: 6px !important;
+    background-color: #3AA2B5;
+    color: #FFFFFF !important;
+    padding: 5px;
+    width: 100%;
+    position: inherit;
+    height: 44px;
+}
+.daos_grid_filtros_top .input-group{
+    float: right; 
+    width: 200px;
+}
+.daos_grid_filtros_top form{
+    text-align: left; 
+    float: left;
+    width: 200px;
+}
+.daos_grid_filtros_bottom{
+    border-bottom-left-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+    background-color: #3AA2B5;
+    color: #FFFFFF !important;
+    padding: 5px;
+    width: 100%;
+    position: inherit;
+    height: 44px;
+}
+.daos_paginacion{
+    margin: 0px 0px;
+    float: right;
+}
+.daos_paginacion_texto{
+    float: left;
+    margin-top: 5px;
+    margin-left: 15px;
+    color: #FFFFFF !important;   
+    font-weight: bold;
+}
+/*
+//
+// DATA GRID
+//
+*/
+.dataTables_filter{
+    float: right;
+}
+.dataTables_length{
+    float: left;
+}
+.dataTables_info{
+    float: left;
+}
+.dataTables_paginate{
+    float: right;
+}
+.paginate_enabled_next{
+    margin-left: 10px;
+}
+.paginate_disabled_next{
+    margin-left: 10px;
+}
+.fg-toolbar{
+    padding: 15px 15px 15px 15px;
+}
+.paging_full_numbers .ui-button {
+    padding: 2px 6px;
+    margin: 0;
+    cursor: pointer;
+}
+.dataTables_filter{
+    float: right;
+}
+/*
+//
+// VALIDACIONES FORMULARIO
+//
+*/
+/* # cambiar estilo a error
+============================================*/
+.controls > .error {
+    color: #b94a48;
+    display: inline-block;
+    *display: inline;
+    padding-left: 5px;
+    vertical-align: middle;
+    *zoom: 1;
+}
+.daos_error {
+    color: #b94a48;
+    display: inline-block;
+    *display: inline;
+    padding-left: 5px;
+    vertical-align: middle;
+    *zoom: 1;
+}
+/*
+//
+// DATEPICKER
+//
+*/
+/* # cambiar el color del mes y año en los date picker para que se vean
+============================================*/
+.ui-datepicker-month{     color: #777; } 
+.ui-datepicker-year{     color: #777; } 
+/*
+//
+// mascaras para la numeración
+//
+*/
+/* 
+============================================*/
+.daos_input_number{
+    font-weight: bold;
+    font-size: 15px;
+    width: 100%;
+    text-align: right;
+    color: #666666;
+}
+.inputsEntrada{
+    font-size: 30px;
+    height: 48px;
+    text-align: left;
+}
