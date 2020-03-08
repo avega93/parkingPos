@@ -1,22 +1,17 @@
-<?php
-
+﻿<?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 require $_SERVER['DOCUMENT_ROOT'] . '/pos/autoload.php';
-
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\EscposImage;
-
 class Parqueo extends CI_Controller {
-
     public function __construct() {
         parent::__construct();
         $this->acceso->validar();
     }
-
     public function lista($alert = NULL) {
-        $data_header['menu_activo'] = 'parqueadero';
+         $data_header['menu_activo'] = 'parqueadero';
 
         $data_header['breadcrumb'] = array(
             array(
@@ -53,6 +48,7 @@ class Parqueo extends CI_Controller {
                 $post['id_admin_usuario'] = $this->session->userdata['id_admin_usuario'];
                 $id_par_activos = $this->modelo->addpar_activos($post);
                 $post['id_par_activos'] = $id_par_activos;
+		
                 $parqueo = $post;
                 $parqueo = $this->modelo->getpar_activos(array('id_par_activos' => $id_par_activos));
                 $parqueo = $parqueo[0];
@@ -62,23 +58,18 @@ class Parqueo extends CI_Controller {
                 redirect('/parqueadero/parqueo/lista/error');
             }
         }
-
-        $usuarios['select'] = base64_encode(" 
+        $activos = $this->modelo->query('
+            SELECT 
             p.id_par_activos,
             p.placa_par_activos,
             p.entrada_par_activos,
             tv.nombre_par_vehiculo_tipo
-            ");
-        $usuarios['from'] = base64_encode(" 
-            FROM 
+             FROM 
                 par_activos p
             INNER JOIN par_vehiculo_tipo tv ON tv.id_par_vehiculo_tipo = p.id_par_vehiculo_tipo 
-               ");
-        $usuarios['where'] = base64_encode("");
-        $usuarios['group'] = base64_encode("");
-        $usuarios['order'] = base64_encode(""
-                . "ORDER BY p.id_par_activos DESC");
-        $usuarios['limit'] = base64_encode("");
+            ORDER BY p.id_par_activos DESC
+            ');
+        
         if ($alert == 'ok') {
             $data_body['alert'] = 'ok';
         }
@@ -106,24 +97,30 @@ class Parqueo extends CI_Controller {
         }
         $data_body['iniciar_turno'] = $iniciar_turno;
         $data_body['registrar'] = $registrar;
-        $this->session->set_userdata(array("activos" => $usuarios));
+        $data_body['activos'] = $activos;
 
         $this->load->view('administrador/templates/header', $data_header);
         $this->load->view('parqueadero/parqueo/lista', $data_body);
         $this->load->view('administrador/templates/footer');
     }
-
     public function pagar($id_par_activos = NULL) {
         $activo_turno = $this->modelo->query('SELECT id_admin_usuario FROM par_turno WHERE fin_par_turno IS NULL');
         $activo_turno = $activo_turno[0];
         if ($activo_turno['id_admin_usuario'] != $this->session->userdata['id_admin_usuario']) {
             redirect('/administrador/login/validar/2');
         }
-        $parqueo = $this->modelo->getpar_activos(array('id_par_activos' => $id_par_activos));
-        $parqueo = $parqueo[0];
-        if (is_null($parqueo)) {
-            redirect('/administrador/usuario/lista/error');
+        $parqueo_real = $this->modelo->getpar_activos(array('id_par_activos' => $id_par_activos));
+        $parqueo_real = $parqueo_real[0];
+	$parqueo = $parqueo_real;
+	if (is_null($parqueo)) {
+            redirect('/parqueadero/parqueo/lista/error');
         }
+	if(!isset($parqueo['id_par_activos'])){
+		redirect('/parqueadero/parqueo/lista/error');
+	}
+	$this->modelo->query('DELETE FROM par_activos WHERE id_par_activos = '.$parqueo['id_par_activos']);
+	$this->modelo->delpar_activos($parqueo_real);		
+        
         $start_date = new DateTime(date('Y-m-d H:i:s'));
         $since_start = $start_date->diff(new DateTime($parqueo['entrada_par_activos']));
         $minutes = $since_start->days * 24 * 60;
@@ -141,29 +138,36 @@ class Parqueo extends CI_Controller {
             redirect('/parqueadero/parqueo/lista/error');
         }
         if (is_null($vFraccion)) {
-            $vFraccion = $vHora / 2;
+            $vFraccion = $vHora;
         }
         if (($tiempo % 2) != 0) {
             $tiempo = $tiempo / 2;
             $tiempo = floor($tiempo);
-            if ($tiempo > 12) {
+            /*if ($tiempo > 12) {
                 $tiempo_cobrar = $tiempo - 4;
             } else {
                 $tiempo_cobrar = $tiempo;
-            }
+            }*/
+            $tiempo_cobrar = $tiempo;
             $cobro = ($tiempo_cobrar * $vHora) + $vFraccion;
             $tiempo_real = $tiempo + 0.5;
         } else {
             $tiempo = $tiempo / 2;
             $tiempo = floor($tiempo);
-            if ($tiempo > 12) {
+            /*if ($tiempo > 12) {
                 $tiempo_cobrar = $tiempo - 4;
             } else {
                 $tiempo_cobrar = $tiempo;
-            }
+            }*/
+            $tiempo_cobrar = $tiempo;
             $cobro = ($tiempo_cobrar * $vHora);
             $tiempo_real = $tiempo;
         }
+
+	if($parqueo_real['tarifa_especial'] == "1"){
+		$cobro =$parqueo_real['valor_tarifa_especial'];
+        $tiempo_real = $parqueo_real['horas_tarifa_especial'];
+    }
         $activo_turno = $this->modelo->query('SELECT id_admin_usuario,id_par_turno FROM par_turno WHERE fin_par_turno IS NULL');
         $activo_turno = $activo_turno[0];
         $insert = array(
@@ -174,15 +178,20 @@ class Parqueo extends CI_Controller {
             'id_par_vehiculo_tipo' => $parqueo['id_par_vehiculo_tipo'],
             'id_par_turno' => $activo_turno['id_par_turno'],
         );
+        if($parqueo_real['tarifa_especial'] == "1"){
+            $insert['tarifa_especial'] = 1;
+            $insert['valor_tarifa_especial'] = $cobro;
+            $insert['horas_tarifa_especial'] = $tiempo_real;
+        }
+	
         $historico = $this->modelo->addpar_historial($insert);
         if ($historico) {
-            $this->modelo->delpar_activos($parqueo);
+            //$this->modelo->delpar_activos($parqueo);
             $this->imprimirPago($historico, $tiempo_real);
             redirect('/parqueadero/parqueo/lista/ok');
         }
         redirect('/parqueadero/parqueo/lista/error');
     }
-
     public function eliminar($id_par_activos = NULL) {
         $parqueo = $this->modelo->getpar_activos(array('id_par_activos' => $id_par_activos));
         $parqueo = $parqueo[0];
@@ -199,12 +208,10 @@ class Parqueo extends CI_Controller {
         $this->modelo->delpar_activos(array('id_par_activos' => $id_par_activos));
         redirect('/parqueadero/parqueo/lista/ok');
     }
-
     public function iniciarTurno() {
         $this->modelo->addpar_turno(array('id_admin_usuario' => $this->session->userdata['id_admin_usuario']));
         redirect('/parqueadero/parqueo/lista/ok');
     }
-
     public function finTurno() {
         $turno = $this->modelo->query('SELECT id_par_turno FROM par_turno WHERE id_admin_usuario = ' . $this->session->userdata['id_admin_usuario'] . ' AND fin_par_turno IS NULL');
         $turno = $turno[0];
@@ -212,7 +219,6 @@ class Parqueo extends CI_Controller {
         $this->modelo->addpar_turno($turno);
         redirect('/parqueadero/parqueo/lista/ok');
     }
-
     public function reImprimir($id_parqueo = null) {
         $parqueo = $this->modelo->getpar_activos(array('id_par_activos' => $id_parqueo));
         $parqueo = $parqueo[0];
@@ -222,9 +228,8 @@ class Parqueo extends CI_Controller {
         $this->imprimir($parqueo);
         redirect('/parqueadero/parqueo/lista/ok');
     }
-
     public function imprimir($parqueo = null) {
-        $entrada = date('d-m-y H:i');
+        $entrada =   date("Y-m-d H:i", strtotime($parqueo['entrada_par_activos']));
         $name_valet = $this->modelo->getadmin_usuario(array('id_admin_usuario' => $parqueo['id_admin_usuario']));
         $name_valet = $name_valet[0]['nombres_admin_usuario'] . ' ' . $name_valet[0]['apellidos_admin_usuario'];
         $name_vehicle = $this->modelo->getpar_vehiculo_tipo(array('id_par_vehiculo_tipo' => $parqueo['id_par_vehiculo_tipo']));
@@ -237,8 +242,6 @@ class Parqueo extends CI_Controller {
         $parametros = $this->modelo->getpar_parametros(array('id_par_parametros' => 1));
         $parametros = $parametros[0];
         /* Print a "Hello world" receipt" */
-
-
         try {
             $tux = EscposImage::load($_SERVER['DOCUMENT_ROOT'] . "/static/img/impresora.png", false);
             $fonts = array(
@@ -315,7 +318,6 @@ class Parqueo extends CI_Controller {
         $printer->cut();
         $printer->close();
     }
-
     public function imprimirPago($id_parqueo = null, $tiempo = null) {
         $parqueo = $this->modelo->getpar_historial(array('id_par_historial' => $id_parqueo));
         $parqueo = $parqueo[0];
@@ -336,8 +338,6 @@ class Parqueo extends CI_Controller {
         $parametros = $this->modelo->getpar_parametros(array('id_par_parametros' => 1));
         $parametros = $parametros[0];
         /* Print a "Hello world" receipt" */
-
-
         try {
             $tux = EscposImage::load($_SERVER['DOCUMENT_ROOT'] . "/static/img/impresora.png", false);
             $fonts = array(
@@ -419,5 +419,4 @@ class Parqueo extends CI_Controller {
         $printer->cut();
         $printer->close();
     }
-
 }

@@ -157,7 +157,7 @@ $(window).load(function () {
     $(function () {
         $('.daos_formulario').validate({
             errorElement: "span",
-            ignore: [],
+            ignore:".no-validate",
             highlight: function (element) {
                 $(element).closest('.control-group')
                         .removeClass('success').addClass('error');

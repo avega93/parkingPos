@@ -15,6 +15,7 @@
         <link href="/static/fonts/fontawesome/css/all.css" rel="stylesheet">
         <link href="/static/plugins/datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
         <link href="/static/plugins/bootstrap-dialog/bootstrap-dialog.min.css" rel="stylesheet">
+        <link href="/static/plugins/datatables.min.css" rel="stylesheet">
 
         <script type="text/javascript" src="/static/js/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="/static/js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -25,6 +26,7 @@
         <script type="text/javascript" src="/static/plugins/datepicker/bootstrap-datepicker.min.js"></script>
         <script type="text/javascript" src="/static/js/daos.js"></script>
         <script type="text/javascript" src="/static/plugins/bootstrap-dialog/bootstrap-dialog.min.js"></script>
+        <script type="text/javascript" src="/static/plugins/datatables.min.js"></script>
 
 
     </head>

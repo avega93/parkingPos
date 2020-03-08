@@ -17,3 +17,6 @@ body {
     margin-left: 30px;
     padding-left: 30px;
 }
+.table-biker thead th {
+   color: #3AA2B5;
+}

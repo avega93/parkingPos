@@ -1,4 +1,4 @@
-<?php if ($alert == 'ok') { ?>
+﻿<?php if ($alert == 'ok') { ?>
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         Vehículo ingresado correctamente.
@@ -37,7 +37,8 @@ if (!$iniciar_turno) {
         <form class="form-horizontal daos_formulario" action="" method="POST" autocomplete="off" role="form">
             <div class="form-group">
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
+                    <label class="col-sm-12 " for="placa_entrada">Placa</label>
                 </div>
                 <div class="col-sm-2">
                     <label class="col-sm-12 " for="casco1">Casco 1</label>
@@ -45,11 +46,14 @@ if (!$iniciar_turno) {
                 <div class="col-sm-2">
                     <label class="col-sm-12 " for="casco2">Casco 2</label>
                 </div>
+		        <div class="col-sm-1">
+                    <label class="col-sm-12 " for="casco2">Tarifa especial</label>
+                </div>
 
             </div>
             <div class="form-group">
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <input class="form-control required inputsEntrada"  style="text-transform:uppercase"  name="placa_par_activos" type="text" id="placa_entrada" placeholder="Inserte placa" maxlength="6" minlength="5" >
                 </div>
                 <div class="col-sm-2">
@@ -58,9 +62,32 @@ if (!$iniciar_turno) {
                 <div class="col-sm-2">
                     <input class="form-control  inputsEntrada"  name="casco2_par_activos" type="text" id="casco2" placeholder="">
                 </div>
-                <div class="col-sm-2 ">
+		        <div class="col-sm-1">
+                    <input class="form-control inputsEntrada"  name="tarifa_especial" type="checkbox" id="tarifa_especial" value="1">
+                </div>
+               
+                <div class="col-sm-2">
                     <button type="submit" class="btn btn-primary inputsEntrada">Ingresar</button>
-                </div>  
+                </div>
+                 
+            </div>
+            <div class="form-group group_tarifa_especial" style="display: none;">
+
+                <div class="col-sm-4">
+                    <label class="col-sm-12 " for="valor_tarifa_especial">Valor de tarifa especial</label>
+                </div>
+                <div class="col-sm-4">
+                    <label class="col-sm-12 " for="horas_tarifa_especial">Horas de tarifa especial</label>
+                </div>
+
+            </div>
+            <div class="form-group group_tarifa_especial" style="display: none;">
+                 <div class="col-sm-4">
+                    <input class="form-control inputsEntrada required no-validate"  name="valor_tarifa_especial" type="number" id="valor_tarifa_especial">
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control inputsEntrada required no-validate"  name="horas_tarifa_especial" type="number" id="horas_tarifa_especial" >
+                </div> 
             </div>
 
         </form>
@@ -76,39 +103,40 @@ if (!$iniciar_turno) {
 <?php } ?>
 <hr/>
 <br/>
-<div class="daos_grid_php" info="activos">
-    <table class="table table-bordered table-hover table-condensed">
+<div >
+    <table class="table table-bordered table-hover table-condensed table-striped table-biker" id="example" style="width:100%">
         <thead>
             <tr>
-                <th order="p.id_par_activos" style="width: 40px !important"># ID</th>
-                <th order="p.placa_par_activos">Placa</th>
-                <th order="p.entrada_par_activos">Hora Entrada</th>
-                <th order="tv.nombre_par_vehiculo_tipo">Tipo</th>
-                <th order="">Acciones</th>
+                <th  style="width: 40px !important"># ID</th>
+                <th >Placa</th>
+                <th >Hora Entrada</th>
+                <th >Tipo</th>
+                <th >Acciones</th>
             </tr>
         </thead>
-        <tbody class="gridBody">
+        <tbody >
+            <?php foreach($activos as $activo) { ?>
             <tr>
-                <td>{id_par_activos}</td>
-                <td>{placa_par_activos}</td>
-                <td>{entrada_par_activos}</td>
-                <td>{nombre_par_vehiculo_tipo}</td>
+                <td><?=$activo['id_par_activos'] ?></td>
+                <td><?=$activo['placa_par_activos']?></td>
+                <td><?=$activo['entrada_par_activos']?></td>
+                <td><?=$activo['nombre_par_vehiculo_tipo']?></td>
                 <td >
                     <div>
                         <?php if (isset($privilegios[203])) { ?>
-                            <a href="/parqueadero/parqueo/eliminar/{id_par_activos}" class="btn btn-danger btn-xs">
+                            <a href="/parqueadero/parqueo/eliminar/<?=$activo['id_par_activos']?>" class="btn btn-danger btn-xs">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
                                 &nbsp; Eliminar
                             </a>
                         <?php } ?>
                         <?php if (isset($privilegios[201]) && $registrar) { ?>
-                            <a href="/parqueadero/parqueo/pagar/{id_par_activos}" class="btn btn-success btn-xs">
+                            <a href="/parqueadero/parqueo/pagar/<?=$activo['id_par_activos']?>" class="btn btn-success btn-xs">
                                 <span class="fa fa-coins" aria-hidden="true"></span> 
                                 &nbsp; Pagar
                             </a>
                         <?php } ?>
                         <?php if (isset($privilegios[201]) && $registrar) { ?>
-                            <a href="/parqueadero/parqueo/reImprimir/{id_par_activos}" class="btn btn-success btn-xs">
+                            <a href="/parqueadero/parqueo/reImprimir/<?=$activo['id_par_activos']?>" class="btn btn-success btn-xs">
                                 <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                                 &nbsp; Imprimir
                             </a>
@@ -116,6 +144,7 @@ if (!$iniciar_turno) {
                     </div>
                 </td>
             </tr>
+            <?php } ?>
         </tbody>
     </table>
 </div>
@@ -130,6 +159,35 @@ if (!$iniciar_turno) {
     <br/>
 <?php } ?>
 <script>
+    $(document).ready(function() {
+    $('#example').DataTable( {
+        "order": [[ 0, "desc" ]],
+        "language"  : {
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":     "Último",
+        "sNext":     "Siguiente",
+        "sPrevious": "Anterior"
+    },
+    "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+}
+    } );
+} );
     $('#finTurno').click(function () {
 
         var sHtml = '';
@@ -214,5 +272,15 @@ if (!$iniciar_turno) {
                 }]
         });
     });
-
+    $("#tarifa_especial").change(function() {
+    if(this.checked) {
+        $(".group_tarifa_especial").show();
+        $("#valor_tarifa_especial").removeClass('no-validate');
+        $("#horas_tarifa_especial").removeClass('no-validate');
+    }else{
+        $(".group_tarifa_especial").hide();
+        $("#valor_tarifa_especial").addClass('no-validate');
+        $("#horas_tarifa_especial").addClass('no-validate');
+    }
+});
 </script>
